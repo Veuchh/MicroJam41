@@ -112,7 +112,7 @@ public class PlayerRocket : MonoBehaviour {
     public void OnAnchorPointGrabbed()
     {
         currentRocketAmount = Mathf.Max(currentRocketAmount, MinRocketAmountOnGrabAnchorPoint);
-
         GameCanvas.Instance?.UpdateRocketsUI(currentRocketAmount);
+        rocketLauncherAnimator.SetInteger(_ANIMATOR_PARAM_AMMO_COUNT, currentRocketAmount);
     }
 }
