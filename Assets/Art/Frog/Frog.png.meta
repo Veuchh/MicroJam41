@@ -116,7 +116,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Frog.Body
+      name: Frog.Body.Idle
       rect:
         serializedVersion: 2
         x: 0
@@ -181,6 +181,72 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Frog.Body.Grapple
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b21ceb2396c39a44788d0deca28f28b1
+      internalID: -1618983329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frog.Tongue.Tip
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 24
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ddcf9e7590c981d4ab4800359b0fb333
+      internalID: 1525550203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Frog.Tongue.MiddleSection
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 24
+        width: 2
+        height: 4
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: afa8e5081d3539944b862aafdc1d7ff8
+      internalID: -609766438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -195,9 +261,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Frog.Body: 2820143329777312509
+      Frog.Body.Grapple: -1618983329
+      Frog.Body.Idle: 2820143329777312509
       Frog.Eye: -699403641
       Frog.Leg: -1081280975163990012
+      Frog.Tongue.MiddleSection: -609766438
+      Frog.Tongue.Tip: 1525550203
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
