@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2771506040007366497
 Transform:
   m_ObjectHideFlags: 0
@@ -149,8 +149,8 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 0.21875
-    height: 0.21875
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -161,7 +161,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 128
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
+  m_TargetTexture: {fileID: 8400000, guid: 6247708511869ef4aa59a22b1c8e7239, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -242,7 +242,7 @@ Transform:
   m_GameObject: {fileID: 1396407320595610951}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.6999996, z: -10}
+  m_LocalPosition: {x: 0, y: 0.9000002, z: -13.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -303,10 +303,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 886251e9a18ece04ea8e61686c173e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CameraDistance: 10
+  CameraDistance: 13.5
   DeadZoneDepth: 0
   Composition:
-    ScreenPosition: {x: 0, y: 0.15}
+    ScreenPosition: {x: 0, y: 0.05}
     DeadZone:
       Enabled: 0
       Size: {x: 0.2, y: 0.2}
@@ -1456,7 +1456,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.5
-  m_GravityScale: 1
+  m_GravityScale: 1.25
   m_Material: {fileID: 6200000, guid: 5dd5b0e6c9c9e1443a4bd907dd50108a, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
@@ -1464,9 +1464,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 2
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!58 &113622361878350197
 CircleCollider2D:
