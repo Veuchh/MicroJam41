@@ -12,6 +12,9 @@ public class AnchorPointHandler : MonoBehaviour
     float anchorPointMaxReach = 4;
 
     [SerializeField]
+    float minGrabDistance = 1.5f;
+
+    [SerializeField]
     Animator animator;
 
     [SerializeField]
@@ -83,7 +86,8 @@ public class AnchorPointHandler : MonoBehaviour
     private void GrabAnchorPoint(AnchorPoint anchorPoint)
     {
         playerSpringJoint.connectedBody = anchorPoint.RB;
-        playerSpringJoint.distance = Vector2.Distance(transform.position, anchorPoint.transform.position);
+        playerSpringJoint.distance = Mathf.Max(minGrabDistance,
+            Vector2.Distance(transform.position, anchorPoint.transform.position));
         playerSpringJoint.enabled = true;
         isHoldingAnchorPoint = true;
         playerRocket.OnAnchorPointGrabbed();
