@@ -810,7 +810,7 @@ GameObject:
   - component: {fileID: 2258917976702340482}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -846,6 +846,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 4823188532003044778}
+  platformLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  rocketRefillRaycastDist: 0.7
+  maxRocketAmount: 3
+  rocketCooldown: 0.1
   rocketStrength: 15
   baseMomentumMultiplierOnFireIfSameDir: 0.5
   momentumMultiplierOnFireSameDirection: 0.25
