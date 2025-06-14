@@ -5,11 +5,23 @@ public class InputHandler : MonoBehaviour
 {
     [SerializeField] private PlayerRocket playerRocket;
 
+    Camera mainCamera;
+
+    Camera MainCamera => mainCamera ??= Camera.main;
+
     public void OnUpdateMousePosition(InputValue value)
     {
-        Vector2 newRocketLauncherDirection = value.Get<Vector2>() / new Vector2(Screen.width, Screen.height);
+        Vector2 mouseScreenPos = value.Get<Vector2>();
+        Vector3 frogScreenPos = MainCamera.WorldToScreenPoint(transform.position);
 
-        newRocketLauncherDirection -= Vector2.one / 2;
-        playerRocket.UpdateRocketLauncherDirection(newRocketLauncherDirection);
+        Vector2 direction = mouseScreenPos - new Vector2(frogScreenPos.x, frogScreenPos.y);
+
+        playerRocket.UpdateRocketLauncherDirection(direction);
+    }
+
+
+    public void OnFire(InputValue value)
+    {
+        playerRocket.OnFireClicked();
     }
 }
