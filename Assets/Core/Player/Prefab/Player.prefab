@@ -876,6 +876,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7099433717112098371}
   - component: {fileID: 5065961149243080740}
+  - component: {fileID: 6421924469765216212}
   m_Layer: 7
   m_Name: Sprite
   m_TagString: Untagged
@@ -942,7 +943,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 2776169872731505672, guid: b8716894f7338d543a5b8df849f5e7a8, type: 3}
+  m_Sprite: {fileID: 6711257252158638106, guid: 677e3b056639bda43889edbb7eb4f37d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -953,6 +954,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &6421924469765216212
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5809366406714476943}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 79447fd5ddeea6742802a4dd30e6c694, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6949983139963833775
 GameObject:
   m_ObjectHideFlags: 0
@@ -1351,6 +1374,7 @@ MonoBehaviour:
   momentumMultiplierOnFireSameDirection: 0.25
   momentumMultiplierOnFireOppositeDirection: 0.1
   rocketLauncher: {fileID: 7942051326870572214}
+  rocketLauncherAnimator: {fileID: 6421924469765216212}
   rocketLauncherSprite: {fileID: 5065961149243080740}
   eyeLeft: {fileID: 4172798890175324615}
   eyeRight: {fileID: 2101027094426646595}

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 677e3b056639bda43889edbb7eb4f37d
+guid: b8716894f7338d543a5b8df849f5e7a8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6711257252158638106
-    second: Rocket_0
+      213: 2776169872731505672
+    second: RocketLauncher_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,11 +113,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: RocketLauncher.Empty
+      name: RocketLauncher
       rect:
         serializedVersion: 2
         x: 0
-        y: 32
+        y: 48
         width: 35
         height: 16
       alignment: 0
@@ -128,140 +128,118 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a180e2fb9ec232d50800000000000000
-      internalID: 6711257252158638106
+      spriteID: 8048d4c5acfe68620800000000000000
+      internalID: 2776169872731505672
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RocketLauncher.Reload_0
-      rect:
-        serializedVersion: 2
-        x: 35
-        y: 32
-        width: 35
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 29c9ce40127764a4089fe8fc29994bc4
-      internalID: 372963473
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: RocketLauncher.Reload_1
-      rect:
-        serializedVersion: 2
-        x: 70
-        y: 32
-        width: 35
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4f74c79ae13ba994ea08951e73cf515b
-      internalID: -2024448805
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: RocketLauncher.Reload_2
+      name: RocketShell
       rect:
         serializedVersion: 2
         x: 0
-        y: 16
-        width: 35
-        height: 16
+        y: 32
+        width: 29
+        height: 14
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cf948be5569e54944b6a869c11ac483b
-      internalID: -887333444
+      spriteID: be71e56a6c2a09341a99300dc3e1f57d
+      internalID: 1706586904
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RocketLauncher.Reload_3
+      name: Dust
       rect:
         serializedVersion: 2
-        x: 35
-        y: 16
-        width: 35
-        height: 16
+        x: 32
+        y: 34
+        width: 14
+        height: 14
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 77f5368e2f3f4a5458f89c06cb0d9612
-      internalID: -1773695716
+      spriteID: 8595fed03ed83c1498137179701b4ea0
+      internalID: 291318233
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RocketLauncher.Reload_4
-      rect:
-        serializedVersion: 2
-        x: 70
-        y: 16
-        width: 35
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2346bb3f054a2fc4ab2d42bebf669101
-      internalID: -103680141
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: RocketLauncher.Full
+      name: RocketFire_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 35
-        height: 16
+        y: 19
+        width: 16
+        height: 12
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 37dacdbbc689fd6408118a4c63f09c63
-      internalID: -1341166267
+      spriteID: 364ca575a21467a4c9f33d73760b0671
+      internalID: -168655562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RocketFire_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 19
+        width: 16
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 007ac554fd147684a9dba8e57b56fa3b
+      internalID: -1765012862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RocketFire_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 19
+        width: 16
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d20deeb3bd1d974e91f6410f92eff0e
+      internalID: -315590630
       vertices: []
       indices: 
       edges: []
@@ -270,7 +248,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: c85f1c674facae846b0c1ac393a8bdd0
+    spriteID: 7789f8d79d69d2d438cc50469b307ebf
     internalID: 0
     vertices: []
     indices: 
@@ -280,13 +258,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      RocketLauncher.Empty: 6711257252158638106
-      RocketLauncher.Full: -1341166267
-      RocketLauncher.Reload_0: 372963473
-      RocketLauncher.Reload_1: -2024448805
-      RocketLauncher.Reload_2: -887333444
-      RocketLauncher.Reload_3: -1773695716
-      RocketLauncher.Reload_4: -103680141
+      Dust: 291318233
+      RocketFire_0: -168655562
+      RocketFire_1: -1765012862
+      RocketFire_2: -315590630
+      RocketLauncher: 2776169872731505672
+      RocketShell: 1706586904
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -2,7 +2,9 @@ using System;
 using UnityEngine;
 
 public class PlayerRocket : MonoBehaviour {
-    
+    private static readonly int _ANIMATOR_PARAM_AMMO_COUNT = Animator.StringToHash("AmmoCount");
+    private static readonly int _ANIMATOR_PARAM_FIRE_TRIGGER = Animator.StringToHash("Fire");
+
     public delegate void RocketFireEvent(Vector2 pos, Vector2 dir);
     public static event RocketFireEvent onRocketFired;
     
@@ -21,6 +23,7 @@ public class PlayerRocket : MonoBehaviour {
     [SerializeField] float momentumMultiplierOnFireOppositeDirection = .1f;
     [Header("GFX")]
     [SerializeField] Transform rocketLauncher;
+    [SerializeField] Animator rocketLauncherAnimator;
     [SerializeField] SpriteRenderer rocketLauncherSprite;
     [SerializeField] Transform eyeLeft;
     [SerializeField] Transform eyeRight;
@@ -55,6 +58,7 @@ public class PlayerRocket : MonoBehaviour {
     public void RefillRockets()
     {
         currentRocketAmount = maxRocketAmount;
+        rocketLauncherAnimator.SetInteger(_ANIMATOR_PARAM_AMMO_COUNT, currentRocketAmount);
 
         GameCanvas.Instance?.UpdateRocketsUI(currentRocketAmount);
     }
@@ -72,6 +76,8 @@ public class PlayerRocket : MonoBehaviour {
 
         FireRocket();
         onRocketFired?.Invoke(transform.position, currentRocketLauncherDirection);
+        rocketLauncherAnimator.SetInteger(_ANIMATOR_PARAM_AMMO_COUNT, currentRocketAmount);
+        rocketLauncherAnimator.SetTrigger(_ANIMATOR_PARAM_FIRE_TRIGGER);
     }
 
     private void FireRocket()
