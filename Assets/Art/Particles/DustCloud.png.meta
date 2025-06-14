@@ -1,10 +1,43 @@
 fileFormatVersion: 2
-guid: b8716894f7338d543a5b8df849f5e7a8
+guid: 8ad4bba218e48a84b9aef65b325da90d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2776169872731505672
-    second: RocketLauncher_0
+      213: -8616563826546764000
+    second: DustCloud_0
+  - first:
+      213: 5907667505228253434
+    second: DustCloud_1
+  - first:
+      213: 2185922343420879380
+    second: DustCloud_2
+  - first:
+      213: -6876793753669575689
+    second: DustCloud_3
+  - first:
+      213: 2021673053331997710
+    second: DustCloud_4
+  - first:
+      213: -7834690449711141087
+    second: DustCloud_5
+  - first:
+      213: 3188810437972381845
+    second: DustCloud_6
+  - first:
+      213: -5686535975742665079
+    second: DustCloud_7
+  - first:
+      213: 9132387063514898850
+    second: DustCloud_8
+  - first:
+      213: -5450879298829673978
+    second: DustCloud_9
+  - first:
+      213: -37862787530286280
+    second: DustCloud_10
+  - first:
+      213: 6947747123943436145
+    second: DustCloud_11
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,133 +146,199 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: RocketLauncher
+      name: DustCloud_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 48
-        width: 35
-        height: 16
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8048d4c5acfe68620800000000000000
-      internalID: 2776169872731505672
+      spriteID: 027133e2ad0db6880800000000000000
+      internalID: -8616563826546764000
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RocketShell
+      name: DustCloud_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af88f3cbb404cf150800000000000000
+      internalID: 5907667505228253434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustCloud_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 412e0323ac4f55e10800000000000000
+      internalID: 2185922343420879380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustCloud_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7fb56ee0488b090a0800000000000000
+      internalID: -6876793753669575689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustCloud_4
       rect:
         serializedVersion: 2
         x: 0
         y: 32
-        width: 29
-        height: 14
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: be71e56a6c2a09341a99300dc3e1f57d
-      internalID: 1706586904
+      spriteID: e0445d34eec6e0c10800000000000000
+      internalID: 2021673053331997710
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dust
+      name: DustCloud_5
       rect:
         serializedVersion: 2
         x: 32
-        y: 34
-        width: 14
-        height: 14
+        y: 32
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 8595fed03ed83c1498137179701b4ea0
-      internalID: 291318233
+      spriteID: 12f62d3cb86954390800000000000000
+      internalID: -7834690449711141087
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RocketFire_0
+      name: DustCloud_6
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 590d663c23ee04c20800000000000000
+      internalID: 3188810437972381845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustCloud_7
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98e016b98ad5511b0800000000000000
+      internalID: -5686535975742665079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DustCloud_8
       rect:
         serializedVersion: 2
         x: 0
-        y: 19
-        width: 16
-        height: 12
+        y: 0
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 364ca575a21467a4c9f33d73760b0671
-      internalID: -168655562
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: RocketFire_1
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 19
-        width: 16
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 007ac554fd147684a9dba8e57b56fa3b
-      internalID: -1765012862
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: RocketFire_2
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 19
-        width: 16
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0d20deeb3bd1d974e91f6410f92eff0e
-      internalID: -315590630
+      spriteID: 2a1ad2816a1ccbe70800000000000000
+      internalID: 9132387063514898850
       vertices: []
       indices: 
       edges: []
@@ -248,7 +347,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 7789f8d79d69d2d438cc50469b307ebf
+    spriteID: 48fdcd88e8212ef4290256fe7d2e7373
     internalID: 0
     vertices: []
     indices: 
@@ -258,12 +357,15 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Dust: 291318233
-      RocketFire_0: -168655562
-      RocketFire_1: -1765012862
-      RocketFire_2: -315590630
-      RocketLauncher: 2776169872731505672
-      RocketShell: 1706586904
+      DustCloud_0: -8616563826546764000
+      DustCloud_1: 5907667505228253434
+      DustCloud_2: 2185922343420879380
+      DustCloud_3: -6876793753669575689
+      DustCloud_4: 2021673053331997710
+      DustCloud_5: -7834690449711141087
+      DustCloud_6: 3188810437972381845
+      DustCloud_7: -5686535975742665079
+      DustCloud_8: 9132387063514898850
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
