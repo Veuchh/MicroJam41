@@ -24,13 +24,13 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Hold",
-                    "type": "Button",
+                    "name": "HoldAnchorPoint",
+                    "type": "Value",
                     "id": "3fbae1d2-90f0-4495-88d1-5fafacd7f723",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -92,11 +92,11 @@
                 {
                     "name": "",
                     "id": "b5a0adc7-da4a-4c1a-9588-ed00da087879",
-                    "path": "",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Hold",
+                    "action": "HoldAnchorPoint",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

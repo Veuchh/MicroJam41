@@ -10,6 +10,7 @@ public class PlayerRocket : MonoBehaviour
     [SerializeField] LayerMask platformLayerMask;
     [SerializeField] float rocketRefillRaycastDist;
     [SerializeField] int maxRocketAmount;
+    [SerializeField] int MinRocketAmountOnGrabAnchorPoint = 1;
     [SerializeField] float rocketCooldown = .1f;
     [Header("Rocket Inertia")]
     [SerializeField] float rocketStrength;
@@ -78,5 +79,10 @@ public class PlayerRocket : MonoBehaviour
             rb.linearVelocity *= momentumMultiplierOnFireOppositeDirection;
 
         rb.AddForce(-currentRocketLauncherDirection * rocketStrength, ForceMode2D.Impulse);
+    }
+
+    public void OnAnchorPointGrabbed()
+    {
+        currentRocketAmount = Mathf.Max(currentRocketAmount, MinRocketAmountOnGrabAnchorPoint);
     }
 }

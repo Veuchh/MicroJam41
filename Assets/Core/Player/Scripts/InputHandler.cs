@@ -3,7 +3,11 @@ using UnityEngine.InputSystem;
 
 public class InputHandler : MonoBehaviour
 {
-    [SerializeField] private PlayerRocket playerRocket;
+    [SerializeField] 
+    PlayerRocket playerRocket;
+
+    [SerializeField] 
+    AnchorPointHandler anchorPointHandler;
 
     Camera mainCamera;
 
@@ -23,5 +27,10 @@ public class InputHandler : MonoBehaviour
     public void OnFire(InputValue value)
     {
         playerRocket.OnFireClicked();
+    }
+
+    public void OnHoldAnchorPoint(InputValue value)
+    {
+        anchorPointHandler.OnNewAnchorPointInput(value.Get<float>() > .5f);
     }
 }
