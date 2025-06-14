@@ -29,7 +29,7 @@ public class PlayerRocket : MonoBehaviour
     float nextAllowedRocketShot;
     Vector2 currentRocketLauncherDirection;
 
-    private void Awake()
+    private void Start()
     {
         anchorPointHandler = GetComponent<AnchorPointHandler>();
         RefillRockets();
@@ -54,6 +54,8 @@ public class PlayerRocket : MonoBehaviour
     public void RefillRockets()
     {
         currentRocketAmount = maxRocketAmount;
+
+        GameCanvas.Instance?.UpdateRocketsUI(currentRocketAmount);
     }
 
     public void UpdateRocketLauncherDirection(Vector2 newDirection)
@@ -73,6 +75,8 @@ public class PlayerRocket : MonoBehaviour
     {
         nextAllowedRocketShot = Time.time + rocketCooldown;
         currentRocketAmount--;
+
+        GameCanvas.Instance?.UpdateRocketsUI(currentRocketAmount);
 
         float dotProduct = Vector2.Dot(rb.linearVelocity, -currentRocketLauncherDirection);
 
@@ -101,5 +105,7 @@ public class PlayerRocket : MonoBehaviour
     public void OnAnchorPointGrabbed()
     {
         currentRocketAmount = Mathf.Max(currentRocketAmount, MinRocketAmountOnGrabAnchorPoint);
+
+        GameCanvas.Instance?.UpdateRocketsUI(currentRocketAmount);
     }
 }
