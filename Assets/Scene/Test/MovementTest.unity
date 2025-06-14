@@ -9683,6 +9683,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4823188532003044778, guid: 522c4e082a166204cb65df0a27f21da7, type: 3}
+      propertyPath: m_AngularDamping
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 9185367874890652152, guid: 522c4e082a166204cb65df0a27f21da7, type: 3}
       propertyPath: m_Name
       value: Player

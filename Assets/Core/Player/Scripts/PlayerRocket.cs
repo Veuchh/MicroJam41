@@ -16,8 +16,11 @@ public class PlayerRocket : MonoBehaviour
     [SerializeField] float baseMomentumMultiplierOnFireIfSameDir = .5f;
     [SerializeField] float momentumMultiplierOnFireSameDirection = .25f;
     [SerializeField] float momentumMultiplierOnFireOppositeDirection = .1f;
-    [Header("Rocket GFX")]
+    [Header("GFX")]
     [SerializeField] Transform rocketLauncher;
+    [SerializeField] SpriteRenderer rocketLauncherSprite;
+    [SerializeField] Transform eyeLeft;
+    [SerializeField] Transform eyeRight;
 
     int currentRocketAmount;
     float nextAllowedRocketShot;
@@ -30,7 +33,13 @@ public class PlayerRocket : MonoBehaviour
 
     private void Update()
     {
-        rocketLauncher.rotation = Quaternion.Euler(0, 0, Vector2.SignedAngle(Vector2.up, currentRocketLauncherDirection) + 90);
+        float rocketLauncherRotation = Vector2.SignedAngle(Vector2.up, currentRocketLauncherDirection) - 90;
+        rocketLauncher.rotation = Quaternion.Euler(0, 0, rocketLauncherRotation);
+
+        rocketLauncherSprite.flipY = rocketLauncherRotation < -90 || rocketLauncherRotation > 90;
+
+        eyeLeft.rotation = Quaternion.Euler(0, 0, Vector2.SignedAngle(Vector2.up, currentRocketLauncherDirection));
+        eyeRight.rotation = Quaternion.Euler(0, 0, Vector2.SignedAngle(Vector2.up, currentRocketLauncherDirection));
 
         if (rb.linearVelocityY <= 0 && Physics2D.Raycast(transform.position, Vector2.down, rocketRefillRaycastDist, platformLayerMask))
         {
