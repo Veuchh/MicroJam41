@@ -1,10 +1,11 @@
 using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-
-public class PlayerRocket : MonoBehaviour
-{
+public class PlayerRocket : MonoBehaviour {
+    
+    public delegate void RocketFireEvent(Vector2 pos, Vector2 dir);
+    public static event RocketFireEvent onRocketFired;
+    
     [SerializeField] Rigidbody2D rb;
     [Header("Rocket Refill")]
     [SerializeField] LayerMask platformLayerMask;
@@ -68,7 +69,9 @@ public class PlayerRocket : MonoBehaviour
         if (currentRocketAmount <= 0 || Time.time < nextAllowedRocketShot)
             return;
 
+
         FireRocket();
+        onRocketFired?.Invoke(transform.position, currentRocketLauncherDirection);
     }
 
     private void FireRocket()
