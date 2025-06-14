@@ -98,8 +98,6 @@ public class PlayerRocket : MonoBehaviour {
             float anchorToAimDotProduct = Vector2.Dot(-currentRocketLauncherDirection.normalized, direction.normalized);
 
             slingShotMultiplier += (- (Mathf.Abs(anchorToAimDotProduct) - 1)) * slingshotStrengthMultiplier;
-
-            Debug.Log(slingShotMultiplier);
         }
 
         rb.AddForce(-currentRocketLauncherDirection * rocketStrength * slingShotMultiplier, ForceMode2D.Impulse);
