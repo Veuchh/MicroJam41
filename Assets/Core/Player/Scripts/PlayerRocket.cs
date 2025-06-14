@@ -13,6 +13,7 @@ public class PlayerRocket : MonoBehaviour
     [SerializeField] int MinRocketAmountOnGrabAnchorPoint = 1;
     [SerializeField] float rocketCooldown = .1f;
     [Header("Rocket Inertia")]
+    [SerializeField] float slingshotStrengthMultiplier = 1;
     [SerializeField] float rocketStrength;
     [SerializeField] float baseMomentumMultiplierOnFireIfSameDir = .5f;
     [SerializeField] float momentumMultiplierOnFireSameDirection = .25f;
@@ -23,12 +24,14 @@ public class PlayerRocket : MonoBehaviour
     [SerializeField] Transform eyeLeft;
     [SerializeField] Transform eyeRight;
 
+    AnchorPointHandler anchorPointHandler;
     int currentRocketAmount;
     float nextAllowedRocketShot;
     Vector2 currentRocketLauncherDirection;
 
     private void Awake()
     {
+        anchorPointHandler = GetComponent<AnchorPointHandler>();
         RefillRockets();
     }
 
@@ -78,7 +81,21 @@ public class PlayerRocket : MonoBehaviour
         else
             rb.linearVelocity *= momentumMultiplierOnFireOppositeDirection;
 
-        rb.AddForce(-currentRocketLauncherDirection * rocketStrength, ForceMode2D.Impulse);
+        //Slingshotting when shooting perpendicularly to held anchor
+        float slingShotMultiplier = 1;
+        if (anchorPointHandler.IsHoldingAnchorPoint)
+        {
+            Vector2 transformPositionVector2 = new Vector2(transform.position.x, transform.position.y);
+            Vector2 anchorPositionVector2 = new Vector2(anchorPointHandler.HeldAnchorPoint.transform.position.x, anchorPointHandler.HeldAnchorPoint.transform.position.y);
+            Vector2 direction = transformPositionVector2 - anchorPositionVector2;
+            float anchorToAimDotProduct = Vector2.Dot(-currentRocketLauncherDirection.normalized, direction.normalized);
+
+            slingShotMultiplier += (- (Mathf.Abs(anchorToAimDotProduct) - 1)) * slingshotStrengthMultiplier;
+
+            Debug.Log(slingShotMultiplier);
+        }
+
+        rb.AddForce(-currentRocketLauncherDirection * rocketStrength * slingShotMultiplier, ForceMode2D.Impulse);
     }
 
     public void OnAnchorPointGrabbed()

@@ -5,9 +5,22 @@ using UnityEngine;
 public class AnchorPointHandler : MonoBehaviour
 {
     const string ANCHOR_POINT_TAG = "AnchorPoint";
+    const string ANIMATOR_BOOL = "IsGrabbing";
 
     [SerializeField]
     float anchorPointMaxReach = 4;
+
+    [SerializeField]
+    Animator animator;
+
+    [SerializeField]
+    Transform tongueStartPosition;
+
+    [SerializeField]
+    LineRenderer tongue;
+
+    [SerializeField]
+    SpriteRenderer tongueTip;
 
     [SerializeField]
     PlayerRocket playerRocket;
@@ -15,8 +28,19 @@ public class AnchorPointHandler : MonoBehaviour
     [SerializeField]
     DistanceJoint2D playerSpringJoint;
 
+    AnchorPoint heldAnchorPoint;
+
     bool isHoldingAnchorPoint;
     bool isHoldInputDown = false;
+
+    public bool IsHoldingAnchorPoint => isHoldingAnchorPoint;
+    public AnchorPoint HeldAnchorPoint => heldAnchorPoint;
+
+    private void Awake()
+    {
+        tongue.transform.SetParent(null);
+        tongue.transform.position = Vector3.zero;
+    }
 
     public void OnNewAnchorPointInput(bool isHoldingInput)
     {
@@ -30,13 +54,13 @@ public class AnchorPointHandler : MonoBehaviour
     {
         if (!isHoldingAnchorPoint && isHoldInputDown)
             TryGrabAnchorPoint();
-    }
 
-    private void ReleaseAnchorPoint()
-    {
-        isHoldingAnchorPoint = false;
-        playerSpringJoint.connectedBody = null;
-        playerSpringJoint.enabled = false;
+        if (isHoldingAnchorPoint && heldAnchorPoint)
+        {
+            tongue.SetPosition(0, tongueStartPosition.position);
+            tongue.SetPosition(1, heldAnchorPoint.transform.position);
+            tongueTip.transform.position = heldAnchorPoint.transform.position;
+        }
     }
 
     private void TryGrabAnchorPoint()
@@ -51,12 +75,31 @@ public class AnchorPointHandler : MonoBehaviour
 
         if (validAnchorPoints.Count > 0)
         {
-            playerSpringJoint.connectedBody = validAnchorPoints[0].RB;
-            playerSpringJoint.distance = Vector2.Distance(transform.position, validAnchorPoints[0].transform.position);
-            playerSpringJoint.enabled = true;
-            isHoldingAnchorPoint = true;
-            playerRocket.OnAnchorPointGrabbed();
+            GrabAnchorPoint(validAnchorPoints[0]);
         }
+    }
 
+    private void GrabAnchorPoint(AnchorPoint anchorPoint)
+    {
+        playerSpringJoint.connectedBody = anchorPoint.RB;
+        playerSpringJoint.distance = Vector2.Distance(transform.position, anchorPoint.transform.position);
+        playerSpringJoint.enabled = true;
+        isHoldingAnchorPoint = true;
+        playerRocket.OnAnchorPointGrabbed();
+        animator.SetBool(ANIMATOR_BOOL, true);
+        heldAnchorPoint = anchorPoint;
+        tongue.gameObject.SetActive(true);
+        tongueTip.gameObject.SetActive(true);
+    }
+
+    private void ReleaseAnchorPoint()
+    {
+        isHoldingAnchorPoint = false;
+        playerSpringJoint.connectedBody = null;
+        playerSpringJoint.enabled = false;
+        animator.SetBool(ANIMATOR_BOOL, false);
+        heldAnchorPoint = null;
+        tongue.gameObject.SetActive(false);
+        tongueTip.gameObject.SetActive(false);
     }
 }
