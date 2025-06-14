@@ -55,6 +55,13 @@ namespace Core.Player {
             GameCanvas.Instance?.UpdateRocketsUI(currentRocketAmount);
         }
 
+        public void AddRockets(int rocketsToAdd)
+        {
+            currentRocketAmount = Mathf.Min(currentRocketAmount + rocketsToAdd, maxRocketAmount);
+            _rocketVisuals.SetAmmoCount(currentRocketAmount);
+            GameCanvas.Instance?.UpdateRocketsUI(currentRocketAmount);
+        }
+
         public void UpdateRocketLauncherDirection(Vector2 newDirection) {
             _rocketVisuals.SetDirection(newDirection.normalized);
             currentRocketLauncherDirection = newDirection.normalized;

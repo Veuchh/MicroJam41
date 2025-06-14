@@ -5,6 +5,9 @@ public class RocketRefillCollectible : MonoBehaviour
 {
     const string PLAYER_TAG = "Player";
 
+    [SerializeField] 
+    int rocketsToAdd = 1;
+
     [SerializeField]
     float cooldownDuration = 2f;
 
@@ -20,7 +23,7 @@ public class RocketRefillCollectible : MonoBehaviour
     {
         if (other.CompareTag(PLAYER_TAG) && CanBePicked)
         {
-            other.GetComponent<PlayerRocket>()?.RefillRockets();
+            other.GetComponent<PlayerRocket>()?.AddRockets(rocketsToAdd);
             ToggleCollectibleGFX(false);
             cooldownEnd = Time.time + cooldownDuration;
         }

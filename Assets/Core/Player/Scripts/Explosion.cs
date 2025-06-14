@@ -31,7 +31,6 @@ public class Explosion : MonoBehaviour
             float distance = Vector2.Distance(otherRb.transform.position, transform.position);
             float forceMagnitude = explosionForce / (distance + 0.01f);
             otherRb.AddForce(direction * forceMagnitude, ForceMode2D.Impulse);
-
         }
     }
 }
