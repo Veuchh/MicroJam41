@@ -450,6 +450,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7942051326870572214}
+  - component: {fileID: 6660558666827622129}
   m_Layer: 7
   m_Name: RocketLauncher
   m_TagString: Untagged
@@ -474,6 +475,20 @@ Transform:
   - {fileID: 1360188526327499868}
   m_Father: {fileID: 8307458124411321488}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6660558666827622129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2532614945501100043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ea103e4948247b49211059798035ec3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rocketLauncherAnimator: {fileID: 6421924469765216212}
+  _rocketLauncherSprite: {fileID: 5065961149243080740}
 --- !u!1 &2865987817519629162
 GameObject:
   m_ObjectHideFlags: 0
@@ -1360,7 +1375,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9509c3866ec70ce4a98fc2245c912f84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 4823188532003044778}
   platformLayerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -1373,6 +1387,7 @@ MonoBehaviour:
   baseMomentumMultiplierOnFireIfSameDir: 0.5
   momentumMultiplierOnFireSameDirection: 0.25
   momentumMultiplierOnFireOppositeDirection: 0.1
+  _rocketVisuals: {fileID: 6660558666827622129}
   rocketLauncher: {fileID: 7942051326870572214}
   rocketLauncherAnimator: {fileID: 6421924469765216212}
   rocketLauncherSprite: {fileID: 5065961149243080740}

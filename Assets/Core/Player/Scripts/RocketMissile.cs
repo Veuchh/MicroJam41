@@ -44,11 +44,7 @@ namespace Core.Player {
 
         private void UpdateCollision() {
             List<Collider2D> colliders = new();
-            if (Physics2D.OverlapCollider(_collider, new ContactFilter2D { layerMask = _layerMask, useLayerMask = true, }, colliders) > 0) {
-                Debug.Log(colliders.Count);
-                foreach (Collider2D c in colliders) {
-                    Debug.Log(c.gameObject.name);
-                }                
+            if (Physics2D.OverlapCollider(_collider, new ContactFilter2D { layerMask = _layerMask, useLayerMask = true, }, colliders) > 0) {             
                 Explode();
             }
         }
