@@ -34,4 +34,9 @@ public class InputHandler : MonoBehaviour
     {
         anchorPointHandler.OnNewAnchorPointInput(value.Get<float>() > .5f);
     }
+
+    public void OnUpdateJoystickDirection(InputValue value)
+    {
+        playerRocket.UpdateRocketLauncherDirection(value.Get<Vector2>().normalized);
+    }
 }
