@@ -226,6 +226,7 @@ GameObject:
   - component: {fileID: 3003509880023477655}
   - component: {fileID: 981405578737193693}
   - component: {fileID: 5199054085958388963}
+  - component: {fileID: 2111419390831309992}
   m_Layer: 7
   m_Name: CinemachineCamera
   m_TagString: Untagged
@@ -322,6 +323,23 @@ MonoBehaviour:
     Time: 0
     Smoothing: 0
     IgnoreY: 0
+--- !u!114 &2111419390831309992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396407320595610951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+  PivotOffset: {x: 0, y: 0, z: 0}
+  AmplitudeGain: 0
+  FrequencyGain: 0
+  m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &1546374230728424550
 GameObject:
   m_ObjectHideFlags: 0
@@ -1568,6 +1586,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cinemachineCamera: {fileID: 981405578737193693}
+  rocketScreenShakeDuration: 0.1
+  screenShakeAmplitude: 2.5
+  screenShakeFrequency: 10
 --- !u!232 &1909304572520325422
 DistanceJoint2D:
   m_ObjectHideFlags: 0
