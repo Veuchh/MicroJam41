@@ -12,6 +12,9 @@ namespace Core.Audio {
         
         private readonly CompositeDisposable _rocketEventBindings = new();
         [Header("Rocket")]
+        [SerializeField] private AudioPool _rocketFireSource;
+        [SerializeField] private AudioResource _rocketFire;
+        
         [SerializeField] private AudioPool _rocketTrailSource;
         [SerializeField] private AudioResource _rocketTrail;
         
@@ -41,6 +44,10 @@ namespace Core.Audio {
         #region Rocket Events
         
         private void BindRocketEvents() {
+            _rocketEventBindings.Add(RocketMissile.OnSpawned.AsObservable().Subscribe(_ => {
+                _rocketFireSource.Play2D(_rocketFire);
+            }));
+            
             _rocketEventBindings.Add(RocketMissile.OnSpawned.AsObservable().Subscribe(ctx => {
                 int instanceID = ctx.Item1;
                 RocketMissile missile = RocketMissile.GetByID(instanceID);
