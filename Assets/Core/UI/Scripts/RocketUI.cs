@@ -15,12 +15,13 @@ public class RocketUI : MonoBehaviour
     Sequence currentSequence;
     bool isShown = false;
 
+    CanvasGroup CanvasGroup => canvasGroup ??= GetComponent<CanvasGroup>(); 
+
     public bool IsShown => isShown;
 
-    private void Awake()
+    private void Start()
     {
-        canvasGroup = GetComponent<CanvasGroup>();
-        startPosition = transform.position;
+        startPosition = transform.localPosition;
     }
 
     void KillTween()
@@ -39,11 +40,11 @@ public class RocketUI : MonoBehaviour
         isShown = false;
         
         transform.rotation = Quaternion.identity;
-        canvasGroup.alpha = 1;
+        CanvasGroup.alpha = 1;
 
         currentSequence = DOTween.Sequence();
         currentSequence.Join(transform.DOShakePosition(fadeOutTweenDuration, shakeStrength, shakeVibrato));
-        currentSequence.Join(canvasGroup.DOFade(0, fadeOutTweenDuration));
+        currentSequence.Join(CanvasGroup.DOFade(0, fadeOutTweenDuration));
 
     }
 
@@ -54,10 +55,10 @@ public class RocketUI : MonoBehaviour
         KillTween();
         currentSequence = DOTween.Sequence();
         currentSequence.AppendInterval(durationDelay);
-        currentSequence.AppendCallback(() => transform.position = startPosition);
+        currentSequence.AppendCallback(() => transform.localPosition = startPosition);
         currentSequence.AppendCallback(() => transform.rotation = Quaternion.Euler(0,0,rotationStrength));
-        currentSequence.AppendCallback(() => canvasGroup.alpha = 0);
+        currentSequence.AppendCallback(() => CanvasGroup.alpha = 0);
         currentSequence.Join(transform.DORotate(Vector3.zero, fadeInTweenDuration).SetEase(Ease.OutQuad));
-        currentSequence.Join(canvasGroup.DOFade(1,fadeInTweenDuration));
+        currentSequence.Join(CanvasGroup.DOFade(1,fadeInTweenDuration));
     }
 }

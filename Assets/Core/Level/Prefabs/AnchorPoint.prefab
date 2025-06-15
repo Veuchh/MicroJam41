@@ -47,6 +47,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 996fa12e3d9b00e4d956941a6a2c3e8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  highlightedSprite: {fileID: 21300000, guid: 9195a1cb0b6732742a3199fd48f84c83, type: 3}
+  unhighlightedSprite: {fileID: 21300000, guid: f98206cfd58517f4aa7eba59de707678, type: 3}
+  spriteRenderer: {fileID: 3211861693564058088}
   rb: {fileID: 2279876416018237778}
 --- !u!58 &8392928971200312124
 CircleCollider2D:

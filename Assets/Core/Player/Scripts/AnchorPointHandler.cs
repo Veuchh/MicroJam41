@@ -36,7 +36,7 @@ public class AnchorPointHandler : MonoBehaviour
 
     bool isHoldingAnchorPoint;
     bool isHoldInputDown = false;
-
+    AnchorPoint targetAnchorPoint;
     public bool IsHoldingAnchorPoint => isHoldingAnchorPoint;
     public AnchorPoint HeldAnchorPoint => heldAnchorPoint;
 
@@ -65,26 +65,56 @@ public class AnchorPointHandler : MonoBehaviour
             tongue.SetPosition(1, heldAnchorPoint.transform.position);
             tongueTip.transform.position = heldAnchorPoint.transform.position;
         }
+
+        if (!isHoldingAnchorPoint)
+        {
+            AnchorPoint bestAnchorPointCandidate = GetBestAnchorPointCandidate();
+
+            if (targetAnchorPoint != bestAnchorPointCandidate)
+            {
+                GameCanvas.Instance?.UpdateAnchorPoint(bestAnchorPointCandidate != null);
+
+                if (targetAnchorPoint != null)
+                    targetAnchorPoint.Highlight(false);
+
+                targetAnchorPoint = bestAnchorPointCandidate;
+
+                if (bestAnchorPointCandidate != null)
+                    bestAnchorPointCandidate.Highlight(true);
+            }
+        }
     }
 
     private void TryGrabAnchorPoint()
     {
-        List<AnchorPoint> validAnchorPoints = new List<AnchorPoint>();
+        if (targetAnchorPoint)
+        {
+            GrabAnchorPoint(targetAnchorPoint);
+        }
+    }
+
+    private AnchorPoint GetBestAnchorPointCandidate()
+    {
+        AnchorPoint bestAnchorPointCandidate = null;
 
         foreach (var collider in Physics2D.OverlapCircleAll(transform.position, anchorPointMaxReach))
         {
             if (collider.CompareTag(ANCHOR_POINT_TAG) && collider.GetComponent<AnchorPoint>() is AnchorPoint anchorPoint)
-                validAnchorPoints.Add(anchorPoint);
+            {
+                if (!targetAnchorPoint
+                    || Vector3.Distance(transform.position, targetAnchorPoint.transform.position) >= Vector3.Distance(transform.position, anchorPoint.transform.position))
+                {
+                    bestAnchorPointCandidate = anchorPoint;
+                }
+            }
         }
 
-        if (validAnchorPoints.Count > 0)
-        {
-            GrabAnchorPoint(validAnchorPoints[0]);
-        }
+        return bestAnchorPointCandidate;
     }
 
     private void GrabAnchorPoint(AnchorPoint anchorPoint)
     {
+        targetAnchorPoint.Highlight(true);
         playerSpringJoint.connectedBody = anchorPoint.RB;
         playerSpringJoint.distance = Mathf.Max(minGrabDistance,
             Vector2.Distance(transform.position, anchorPoint.transform.position));
@@ -99,6 +129,8 @@ public class AnchorPointHandler : MonoBehaviour
 
     private void ReleaseAnchorPoint()
     {
+        targetAnchorPoint?.Highlight(false);
+        targetAnchorPoint = null;
         isHoldingAnchorPoint = false;
         playerSpringJoint.connectedBody = null;
         playerSpringJoint.enabled = false;
