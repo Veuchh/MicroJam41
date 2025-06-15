@@ -9,8 +9,16 @@ using UnityEngine.Audio;
 namespace Core.Audio {
     public class AudioController : MonoBehaviour {
         
-        
+        private readonly CompositeDisposable _playerEventBindings = new();
         private readonly CompositeDisposable _rocketEventBindings = new();
+        
+        [Header("Player")]
+        [SerializeField] private AudioSource _grappleOnSource;
+        [SerializeField] private AudioResource _grappleOn;
+        
+        [SerializeField] private AudioSource _grappleOffSource;
+        [SerializeField] private AudioResource _grappleOff;
+        
         [Header("Rocket")]
         [SerializeField] private AudioPool _rocketFireSource;
         [SerializeField] private AudioResource _rocketFire;
@@ -22,6 +30,7 @@ namespace Core.Audio {
         [SerializeField] private AudioResource _rocketExplosion;
 
         private void Awake() {
+            _playerEventBindings.AddTo(this);
             _rocketEventBindings.AddTo(this);
         }
 
@@ -34,12 +43,60 @@ namespace Core.Audio {
         }
 
         private void Bind() {
+            BindPlayerEvents();
             BindRocketEvents();
         }
         private void Unbind() {
+            UnbindPlayerEvents();
             UnbindRocketEvents();
         }
 
+        #region Player Events
+
+        private void BindPlayerEvents() {
+            Func<Action<AnchorPoint>, AnchorPointHandler.AnchorPointEvent> anchorPointEventConverter = handler => arg => handler(arg);
+            IObservable<AnchorPoint> grappleOn = Observable.FromEvent(
+                anchorPointEventConverter,
+                handler => AnchorPointHandler.OnAnchorPointGrabbed += handler,
+                handler => AnchorPointHandler.OnAnchorPointGrabbed -= handler
+            );
+            IObservable<AnchorPoint> grappleOff = Observable.FromEvent(
+                anchorPointEventConverter,
+                handler => AnchorPointHandler.OnAnchorPointReleased += handler,
+                handler => AnchorPointHandler.OnAnchorPointReleased -= handler
+            );
+
+            CancellationTokenSource grappleOnCanceller = null;
+            CancellationTokenSource grappleOffCanceller = null;
+            
+            _playerEventBindings.Add(grappleOn.Subscribe(_ => {
+                grappleOnCanceller?.Cancel();
+                grappleOffCanceller?.Cancel();
+                grappleOnCanceller = null;
+                grappleOffCanceller = null;
+                
+                _grappleOnSource.resource = _grappleOn;
+                _grappleOnSource.spatialBlend = 0;
+                _grappleOnSource.Play();
+                grappleOnCanceller = _grappleOnSource.GetCanceler();
+            }));
+            _playerEventBindings.Add(grappleOff.Subscribe(_ => {
+                grappleOnCanceller?.Cancel();
+                grappleOffCanceller?.Cancel();
+                grappleOnCanceller = null;
+                grappleOffCanceller = null; 
+                _grappleOffSource.resource = _grappleOff;
+                _grappleOffSource.spatialBlend = 0;
+                _grappleOffSource.Play();
+                grappleOffCanceller = _grappleOffSource.GetCanceler();
+            }));
+        }
+
+        private void UnbindPlayerEvents() {
+            _playerEventBindings?.Clear();
+        }
+
+        #endregion
 
         #region Rocket Events
         
@@ -70,7 +127,7 @@ namespace Core.Audio {
         }
         
         private void UnbindRocketEvents() {
-            _rocketEventBindings?.Dispose();
+            _rocketEventBindings?.Clear();
         }
         
         #endregion

@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using Core.Player;
 using UnityEngine;
 
-public class AnchorPointHandler : MonoBehaviour
-{
+public class AnchorPointHandler : MonoBehaviour {
+    public delegate void AnchorPointEvent(AnchorPoint anchorPoint);
+    public static event AnchorPointEvent OnAnchorPointGrabbed;
+    public static event AnchorPointEvent OnAnchorPointReleased;
+    
     const string ANCHOR_POINT_TAG = "AnchorPoint";
     const string ANIMATOR_BOOL = "IsGrabbing";
 
@@ -114,6 +117,7 @@ public class AnchorPointHandler : MonoBehaviour
 
     private void GrabAnchorPoint(AnchorPoint anchorPoint)
     {
+        OnAnchorPointGrabbed?.Invoke(anchorPoint);
         targetAnchorPoint.Highlight(true);
         playerSpringJoint.connectedBody = anchorPoint.RB;
         playerSpringJoint.distance = Mathf.Max(minGrabDistance,
@@ -129,6 +133,7 @@ public class AnchorPointHandler : MonoBehaviour
 
     private void ReleaseAnchorPoint()
     {
+        OnAnchorPointReleased?.Invoke(heldAnchorPoint);
         targetAnchorPoint?.Highlight(false);
         targetAnchorPoint = null;
         isHoldingAnchorPoint = false;
