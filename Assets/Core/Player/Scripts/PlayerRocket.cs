@@ -1,4 +1,6 @@
+using DG.Tweening;
 using NaughtyAttributes;
+using System;
 using UnityEngine;
 
 namespace Core.Player {
@@ -29,11 +31,17 @@ namespace Core.Player {
         [Space] [Foldout("GFX")] [SerializeField] private RocketLauncherVisualHandler _rocketVisuals;
         [Foldout("GFX")] [SerializeField] Transform eyeLeft;
         [Foldout("GFX")] [SerializeField] Transform eyeRight;
+        [Foldout("GFX")][SerializeField] Transform recoilTransform;
+        [Foldout("GFX")][SerializeField] float recoilStrength = .1f;
+        [Foldout("GFX")][SerializeField] float recoilDuration = .1f;
+        [Foldout("GFX")][SerializeField] float recoilRecoverDuration = .1f;
+        [Foldout("GFX")][SerializeField] float recoilMaxDistance = .2f;
 
         private int currentRocketAmount;
         private float nextAllowedRocketShot;
         private Vector2 currentRocketLauncherDirection;
-        
+        private Sequence recoilSequence;
+
         private void Start()
         {
             RefillRockets();
@@ -112,6 +120,21 @@ namespace Core.Player {
 
             Rigidbody.AddForce(-currentRocketLauncherDirection * rocketStrength * slingShotMultiplier, ForceMode2D.Impulse);
             OnRocketFired?.Invoke(transform.position, currentRocketLauncherDirection);
+
+            RecoilRocketLauncher();
+        }
+
+        private void RecoilRocketLauncher()
+        {
+            if (recoilSequence != null)
+                recoilSequence.Kill();
+
+            recoilSequence = DOTween.Sequence();
+
+            float targetRecoil = Mathf.Min(recoilTransform.localPosition.z + recoilStrength, recoilMaxDistance);
+
+            recoilSequence.Join(recoilTransform.DOLocalMoveX(targetRecoil, recoilDuration).SetEase(Ease.OutCirc));
+            recoilSequence.Append(recoilTransform.DOLocalMoveX(0, recoilRecoverDuration).SetEase(Ease.InOutSine));
         }
 
         public void OnAnchorPointGrabbed() {

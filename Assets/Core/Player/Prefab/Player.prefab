@@ -242,7 +242,7 @@ Transform:
   m_GameObject: {fileID: 1396407320595610951}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.9000002, z: -13.5}
+  m_LocalPosition: {x: -2.6000006, y: 1.8199998, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -273,7 +273,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 60
-    OrthographicSize: 9
+    OrthographicSize: 13
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -303,17 +303,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 886251e9a18ece04ea8e61686c173e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CameraDistance: 13.5
+  CameraDistance: 15
   DeadZoneDepth: 0
   Composition:
-    ScreenPosition: {x: 0, y: 0.05}
+    ScreenPosition: {x: 0.1, y: 0.07}
     DeadZone:
-      Enabled: 0
-      Size: {x: 0.2, y: 0.2}
+      Enabled: 1
+      Size: {x: 0, y: 0.09}
     HardLimits:
       Enabled: 1
-      Size: {x: 0.2, y: 0.2}
-      Offset: {x: 0, y: 0.3}
+      Size: {x: 0.15, y: 0.2}
+      Offset: {x: 0, y: 0}
   CenterOnActivate: 1
   TargetOffset: {x: 0, y: 0, z: 0}
   Damping: {x: 0.3, y: 0.3, z: 0.3}
@@ -471,8 +471,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7099433717112098371}
-  - {fileID: 1360188526327499868}
+  - {fileID: 1592519241934222486}
   m_Father: {fileID: 8307458124411321488}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6660558666827622129
@@ -907,12 +906,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5809366406714476943}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7942051326870572214}
+  m_Father: {fileID: 1592519241934222486}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5065961149243080740
 SpriteRenderer:
@@ -1016,12 +1015,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6949983139963833775}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.55, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 7942051326870572214}
+  m_Father: {fileID: 1592519241934222486}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7620071971388986744
 MonoBehaviour:
@@ -1318,6 +1317,39 @@ LineRenderer:
   m_UseWorldSpace: 0
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!1 &7599196678348581834
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1592519241934222486}
+  m_Layer: 7
+  m_Name: Recoil
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1592519241934222486
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7599196678348581834}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7099433717112098371}
+  - {fileID: 1360188526327499868}
+  m_Father: {fileID: 7942051326870572214}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9185367874890652152
 GameObject:
   m_ObjectHideFlags: 0
@@ -1378,6 +1410,7 @@ MonoBehaviour:
   platformLayerMask:
     serializedVersion: 2
     m_Bits: 64
+  sideRaycastDistance: 0.05
   rocketRefillRaycastDist: 0.7
   maxRocketAmount: 3
   MinRocketAmountOnGrabAnchorPoint: 1
@@ -1388,11 +1421,13 @@ MonoBehaviour:
   momentumMultiplierOnFireSameDirection: 0.25
   momentumMultiplierOnFireOppositeDirection: 0.1
   _rocketVisuals: {fileID: 6660558666827622129}
-  rocketLauncher: {fileID: 7942051326870572214}
-  rocketLauncherAnimator: {fileID: 6421924469765216212}
-  rocketLauncherSprite: {fileID: 5065961149243080740}
   eyeLeft: {fileID: 4172798890175324615}
   eyeRight: {fileID: 2101027094426646595}
+  recoilTransform: {fileID: 1592519241934222486}
+  recoilStrength: 0.1
+  recoilDuration: 0.1
+  recoilRecoverDuration: 0.1
+  recoilMaxDistance: 0.2
 --- !u!114 &1439403255031621134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1406,6 +1441,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anchorPointMaxReach: 4
+  minGrabDistance: 1.5
   animator: {fileID: 823316048250184159}
   tongueStartPosition: {fileID: 5610841473010580650}
   tongue: {fileID: 9033326274213424929}
