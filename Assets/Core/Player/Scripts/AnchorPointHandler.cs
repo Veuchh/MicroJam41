@@ -37,6 +37,7 @@ public class AnchorPointHandler : MonoBehaviour {
 
     AnchorPoint heldAnchorPoint;
 
+    bool isEndGameState = false;
     bool isHoldingAnchorPoint;
     bool isHoldInputDown = false;
     AnchorPoint targetAnchorPoint;
@@ -53,21 +54,24 @@ public class AnchorPointHandler : MonoBehaviour {
     {
         isHoldInputDown = isHoldingInput;
 
-        if (isHoldingAnchorPoint && !isHoldingInput)
+        if (!isEndGameState && isHoldingAnchorPoint && !isHoldingInput)
             ReleaseAnchorPoint();
     }
 
     private void Update()
     {
-        if (!isHoldingAnchorPoint && isHoldInputDown)
-            TryGrabAnchorPoint();
-
         if (isHoldingAnchorPoint && heldAnchorPoint)
         {
             tongue.SetPosition(0, tongueStartPosition.position);
             tongue.SetPosition(1, heldAnchorPoint.transform.position);
             tongueTip.transform.position = heldAnchorPoint.transform.position;
         }
+
+        if (isEndGameState)
+            return;
+
+        if (!isHoldingAnchorPoint && isHoldInputDown)
+            TryGrabAnchorPoint();
 
         if (!isHoldingAnchorPoint)
         {
@@ -129,6 +133,18 @@ public class AnchorPointHandler : MonoBehaviour {
         heldAnchorPoint = anchorPoint;
         tongue.gameObject.SetActive(true);
         tongueTip.gameObject.SetActive(true);
+
+        anchorPoint.OnGrabbed();
+
+        if (anchorPoint.IsAnchorPointEndGame)
+        {
+            ToggleEndGameState();
+        }
+    }
+
+    private void ToggleEndGameState()
+    {
+        isEndGameState = true;
     }
 
     private void ReleaseAnchorPoint()
