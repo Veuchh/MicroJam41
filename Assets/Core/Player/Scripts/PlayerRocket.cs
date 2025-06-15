@@ -14,6 +14,7 @@ namespace Core.Player {
         private AnchorPointHandler _anchorPointHandler;
         
         [Foldout("Rocket Refill")] [SerializeField] LayerMask platformLayerMask;
+        [Foldout("Rocket Refill")] [SerializeField] float sideRaycastDistance = .35f;
         [Foldout("Rocket Refill")] [SerializeField] float rocketRefillRaycastDist;
         [Foldout("Rocket Refill")] [SerializeField] int maxRocketAmount;
         [Foldout("Rocket Refill")] [SerializeField] int MinRocketAmountOnGrabAnchorPoint = 1;
@@ -42,10 +43,18 @@ namespace Core.Player {
             eyeLeft.rotation = Quaternion.Euler(0, 0, Vector2.SignedAngle(Vector2.up, currentRocketLauncherDirection));
             eyeRight.rotation = Quaternion.Euler(0, 0, Vector2.SignedAngle(Vector2.up, currentRocketLauncherDirection));
 
-            if (Rigidbody.linearVelocityY <= 0 && Physics2D.Raycast(transform.position, Vector2.down, rocketRefillRaycastDist, platformLayerMask))
+            if (Rigidbody.linearVelocityY <= 0 && IsGrounded())
             {
                 RefillRockets();
             }
+        }
+
+        bool IsGrounded()
+        {
+            return 
+                Physics2D.Raycast(transform.position, Vector2.down, rocketRefillRaycastDist, platformLayerMask)
+                ||Physics2D.Raycast(transform.position + Vector3.left * sideRaycastDistance, Vector2.down, rocketRefillRaycastDist, platformLayerMask)
+                ||Physics2D.Raycast(transform.position + Vector3.right * sideRaycastDistance, Vector2.down, rocketRefillRaycastDist, platformLayerMask);
         }
 
         public void RefillRockets()
