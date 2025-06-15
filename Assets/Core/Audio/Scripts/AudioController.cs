@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using Core.Level;
 using Core.Player;
 using Cysharp.Threading.Tasks;
 using UniRx;
@@ -10,6 +11,7 @@ namespace Core.Audio {
     public class AudioController : MonoBehaviour {
         
         private readonly CompositeDisposable _playerEventBindings = new();
+        private readonly CompositeDisposable _collectibleEventBindings = new();
         private readonly CompositeDisposable _rocketEventBindings = new();
         
         [Header("Player")]
@@ -18,6 +20,10 @@ namespace Core.Audio {
         
         [SerializeField] private AudioSource _grappleOffSource;
         [SerializeField] private AudioResource _grappleOff;
+
+        [Header("Collectibles")]
+        [SerializeField] private AudioPool _breadcrumbCollectSource;
+        [SerializeField] private AudioResource _breadcrumbCollect;
         
         [Header("Rocket")]
         [SerializeField] private AudioPool _rocketFireSource;
@@ -31,6 +37,7 @@ namespace Core.Audio {
 
         private void Awake() {
             _playerEventBindings.AddTo(this);
+            _collectibleEventBindings.AddTo(this);
             _rocketEventBindings.AddTo(this);
         }
 
@@ -44,10 +51,12 @@ namespace Core.Audio {
 
         private void Bind() {
             BindPlayerEvents();
+            BindCollectibleEvents();
             BindRocketEvents();
         }
         private void Unbind() {
             UnbindPlayerEvents();
+            UnbindCollectibleEvents();
             UnbindRocketEvents();
         }
 
@@ -98,6 +107,23 @@ namespace Core.Audio {
 
         #endregion
 
+        #region Collectibles
+
+        private void BindCollectibleEvents() {
+            IObservable<Vector2> onBreadcrumbCollected = Observable.FromEvent(
+                (Action<Vector2> handler) => BreadcrumbCollectible.OnBreadcrumbCollected += handler,
+                handler => BreadcrumbCollectible.OnBreadcrumbCollected -= handler);
+            _collectibleEventBindings.Add(onBreadcrumbCollected.Subscribe(position => {
+                _breadcrumbCollectSource.Play3D(_breadcrumbCollect, position, out _);
+            }));
+        }
+
+        private void UnbindCollectibleEvents() {
+            _collectibleEventBindings?.Clear();
+        }
+
+        #endregion
+
         #region Rocket Events
         
         private void BindRocketEvents() {
@@ -111,11 +137,11 @@ namespace Core.Audio {
                 if (!missile) return;
                 // Start the trail audio
                 CancellationTokenSource audioCanceler = _rocketTrailSource.Play3D(_rocketTrail, position: ctx.Item2, out Action<Vector2> updatePositionHandler);
-                // Updates the 3D location of the audiosource as the missile moves
+                // Updates the 3D location of the audioSource as the missile moves
                 IDisposable updatePosCanceler = missile.ObserveEveryValueChanged(m => m.transform.position)
                     .Subscribe(pos => updatePositionHandler(pos));
                 // Stop updating position when the missile is destroyed (not registered anymore)
-                UniTask.WaitUntil(() => !RocketMissile.GetByID(instanceID)).ContinueWith(() => {
+                UniTask.WaitUntil(() => !RocketMissile.GetByID(instanceID), cancellationToken:CancellationToken.None).ContinueWith(() => {
                     audioCanceler.Cancel();
                     updatePosCanceler.Dispose();
                 });

@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 namespace Core.Level {
     [RequireComponent(typeof(Collider2D))]
     public class BreadcrumbCollectible : MonoBehaviour {
-        public static event Action OnBreadcrumbCollected;
+        public static event Action<Vector2> OnBreadcrumbCollected;
         private static readonly int _COLLECTED = Animator.StringToHash("Collected");
         private static readonly int _VISIBLE = Animator.StringToHash("Visible");
         private static readonly int _HIDE_INSTANT = Animator.StringToHash("HideInstant");
@@ -76,7 +76,7 @@ namespace Core.Level {
             SetCollected(true);
             SetVisible(false);
             RespawnIn(_cooldownDuration);
-            OnBreadcrumbCollected?.Invoke();
+            OnBreadcrumbCollected?.Invoke(transform.position);
         }
 
         private void RespawnIn(float cooldownDuration) {
