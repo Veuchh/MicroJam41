@@ -1,14 +1,17 @@
+using Core.Level;
 using DG.Tweening;
+using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameCanvas : MonoBehaviour
 {
     public static GameCanvas Instance;
-    
+
     [SerializeField]
     List<RocketUI> rocketsUI;
-    
+
     [SerializeField]
     float recoverDelay = .1f;
 
@@ -18,17 +21,33 @@ public class GameCanvas : MonoBehaviour
     [SerializeField]
     float anchorPointTransitionDuration = .2f;
 
+    [SerializeField]
+    TextMeshProUGUI scoreText;
+
     Sequence anchorPointSequence;
+    int currentScore = 0;
 
     private void Awake()
     {
         if (!Instance)
         {
             Instance = this;
+            BreadcrumbCollectible.OnBreadcrumbCollected += OnBreadcrumbCollected;
             return;
         }
 
         Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        BreadcrumbCollectible.OnBreadcrumbCollected -= OnBreadcrumbCollected;
+    }
+
+    private void OnBreadcrumbCollected(Vector2 vector)
+    {
+        currentScore++;
+        scoreText.text = currentScore.ToString("D3");
     }
 
     public void UpdateRocketsUI(int newRocketsAmount)
@@ -61,7 +80,7 @@ public class GameCanvas : MonoBehaviour
         if (isShown)
         {
             anchorPointUI.localScale = Vector3.zero;
-            anchorPointUI.rotation = Quaternion.Euler(0,0,180);
+            anchorPointUI.rotation = Quaternion.Euler(0, 0, 180);
             anchorPointSequence.Join(anchorPointUI.DOScale(Vector3.one, anchorPointTransitionDuration).SetEase(Ease.OutBack));
             anchorPointSequence.Join(anchorPointUI.DORotate(Vector3.zero, anchorPointTransitionDuration).SetEase(Ease.OutBack));
         }
