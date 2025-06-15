@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerTag: Player
-  _cooldownDuration: 2
+  _cooldownDuration: 0.3
   _animator: {fileID: 6175871347242292449}
 --- !u!1 &8839157281093555746
 GameObject:
