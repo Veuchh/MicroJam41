@@ -9,6 +9,7 @@ public class RocketUI : MonoBehaviour
     [SerializeField] int shakeVibrato = 90;
     [SerializeField] float fadeInTweenDuration = .2f;
     [SerializeField] float fadeOutTweenDuration = .2f;
+    [SerializeField] Vector3 startPosition;
 
     CanvasGroup canvasGroup;
     Sequence currentSequence;
@@ -19,6 +20,7 @@ public class RocketUI : MonoBehaviour
     private void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
+        startPosition = transform.position;
     }
 
     void KillTween()
@@ -52,6 +54,7 @@ public class RocketUI : MonoBehaviour
         KillTween();
         currentSequence = DOTween.Sequence();
         currentSequence.AppendInterval(durationDelay);
+        currentSequence.AppendCallback(() => transform.position = startPosition);
         currentSequence.AppendCallback(() => transform.rotation = Quaternion.Euler(0,0,rotationStrength));
         currentSequence.AppendCallback(() => canvasGroup.alpha = 0);
         currentSequence.Join(transform.DORotate(Vector3.zero, fadeInTweenDuration).SetEase(Ease.OutQuad));
