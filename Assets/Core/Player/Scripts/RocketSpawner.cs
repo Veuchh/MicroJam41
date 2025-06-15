@@ -10,6 +10,11 @@ namespace Core.Player {
             PlayerRocket.OnRocketFired += OnRocketFired;
         }
 
+        private void OnDisable()
+        {
+            PlayerRocket.OnRocketFired -= OnRocketFired;
+        }
+
         private void OnRocketFired(Vector2 pos, Vector2 dir) {
             RocketMissile rocket = Instantiate(_rocketPrefab, transform.position, Quaternion.identity);
             rocket.transform.rotation = Quaternion.AngleAxis(-Vector2.SignedAngle(dir.normalized, Vector3.left),Vector3.forward);
