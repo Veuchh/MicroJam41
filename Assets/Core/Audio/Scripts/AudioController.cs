@@ -20,10 +20,15 @@ namespace Core.Audio {
         
         [SerializeField] private AudioSource _grappleOffSource;
         [SerializeField] private AudioResource _grappleOff;
+        
+        [SerializeField] private AudioPool _ammoReloadSource;
+        [SerializeField] private AudioResource _ammoReload;
 
         [Header("Collectibles")]
         [SerializeField] private AudioPool _breadcrumbCollectSource;
         [SerializeField] private AudioResource _breadcrumbCollect;
+        [SerializeField] private AudioPool _ammoCollectSource;
+        [SerializeField] private AudioResource _ammoCollect;
         
         [Header("Rocket")]
         [SerializeField] private AudioPool _rocketFireSource;
@@ -99,6 +104,14 @@ namespace Core.Audio {
                 _grappleOffSource.Play();
                 grappleOffCanceller = _grappleOffSource.GetCanceler();
             }));
+            
+            IObservable<Unit> rocketReloaded = Observable.FromEvent(
+                handler => RocketUI.OnRocketReloaded += handler,
+                handler => RocketUI.OnRocketReloaded -= handler
+            );
+            _playerEventBindings.Add(rocketReloaded.Subscribe(_ => {
+                _ammoReloadSource.Play2D(_ammoReload);
+            }));
         }
 
         private void UnbindPlayerEvents() {
@@ -113,8 +126,20 @@ namespace Core.Audio {
             IObservable<Vector2> onBreadcrumbCollected = Observable.FromEvent(
                 (Action<Vector2> handler) => BreadcrumbCollectible.OnBreadcrumbCollected += handler,
                 handler => BreadcrumbCollectible.OnBreadcrumbCollected -= handler);
+            
             _collectibleEventBindings.Add(onBreadcrumbCollected.Subscribe(position => {
                 _breadcrumbCollectSource.Play3D(_breadcrumbCollect, position, out _);
+            }));
+            
+            
+            Func<Action<Vector2>, Action<Vector2,int>> converter = handler => (pos, _) => handler(pos);
+            IObservable<Vector2> onAmmoCollected = Observable.FromEvent(
+                converter,
+                handler => RocketRefillCollectible.OnAmmoCollected += handler,
+                handler => RocketRefillCollectible.OnAmmoCollected -= handler);
+            
+            _collectibleEventBindings.Add(onAmmoCollected.Subscribe(position => {
+                _ammoCollectSource.Play3D(_ammoCollect, position, out _);
             }));
         }
 

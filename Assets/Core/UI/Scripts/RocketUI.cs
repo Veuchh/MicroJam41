@@ -1,9 +1,10 @@
+using System;
 using DG.Tweening;
 using NaughtyAttributes;
 using UnityEngine;
 
-public class RocketUI : MonoBehaviour
-{
+public class RocketUI : MonoBehaviour {
+    public static event Action OnRocketReloaded;
     [SerializeField] float rotationStrength = 90;
     [SerializeField] float shakeStrength = 90;
     [SerializeField] int shakeVibrato = 90;
@@ -49,15 +50,17 @@ public class RocketUI : MonoBehaviour
     }
 
     [Button]
-    public void OnRocketRecovered(float durationDelay = 0)
-    {
+    public void OnRocketRecovered(float durationDelay = 0) {
         isShown = true;
         KillTween();
         currentSequence = DOTween.Sequence();
         currentSequence.AppendInterval(durationDelay);
-        currentSequence.AppendCallback(() => transform.localPosition = startPosition);
-        currentSequence.AppendCallback(() => transform.rotation = Quaternion.Euler(0,0,rotationStrength));
-        currentSequence.AppendCallback(() => CanvasGroup.alpha = 0);
+        currentSequence.AppendCallback(() => {
+            transform.localPosition = startPosition;
+            transform.rotation = Quaternion.Euler(0,0,rotationStrength);
+            CanvasGroup.alpha = 0;
+            OnRocketReloaded?.Invoke();
+        });
         currentSequence.Join(transform.DORotate(Vector3.zero, fadeInTweenDuration).SetEase(Ease.OutQuad));
         currentSequence.Join(CanvasGroup.DOFade(1,fadeInTweenDuration));
     }
