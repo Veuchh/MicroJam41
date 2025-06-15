@@ -1385,6 +1385,7 @@ GameObject:
   - component: {fileID: 113622361878350197}
   - component: {fileID: 2258917976702340482}
   - component: {fileID: 1909304572520325422}
+  - component: {fileID: -3173913931628282514}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -1609,3 +1610,17 @@ DistanceJoint2D:
   m_AutoConfigureDistance: 0
   m_Distance: 0.005
   m_MaxDistanceOnly: 1
+--- !u!114 &-3173913931628282514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9185367874890652152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea629c19b9b9e9c49998c8e8a6374599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minVelocityThresholdToTrigger: 7.5
+  dustCloud: {fileID: 3436997922116212260, guid: 1d685f5ff0cb7654c9cf5ed64c8fad7a, type: 3}

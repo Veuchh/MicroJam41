@@ -27,10 +27,15 @@ public class GameEndSequenceHandler : MonoBehaviour
 
     Sequence timeScaleSequence;
     bool isGameEnded = false;
-     
+
     private void Awake()
     {
         AnchorPoint.OnEndAnchorPointGrabbed += EndPointGrabbed;
+    }
+
+    private void OnDestroy()
+    {
+        AnchorPoint.OnEndAnchorPointGrabbed -= EndPointGrabbed;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
