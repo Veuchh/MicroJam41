@@ -11,8 +11,8 @@ namespace Core.Audio {
             return canceler;
 
             async UniTaskVoid DisposeHandler(CancellationTokenSource cancellation) {
-                bool canceled = await UniTask.WaitUntil(() => !audioSource.isPlaying, cancellationToken: cancellation.Token).SuppressCancellationThrow();
-                if (canceled && audioSource.isPlaying) audioSource.Stop();
+                bool canceled = await UniTask.WaitUntil(() => !audioSource || !audioSource.isPlaying, cancellationToken: cancellation.Token).SuppressCancellationThrow();
+                if (canceled && audioSource && audioSource.isPlaying) audioSource.Stop();
                 cancellation.Cancel();
             }
         }
