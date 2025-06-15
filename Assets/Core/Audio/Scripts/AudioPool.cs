@@ -20,7 +20,7 @@ namespace Core.Audio {
             audioSource.resource = resource;
             audioSource.spatialBlend = 0;
             audioSource.Play();
-            return GetCanceler(audioSource);
+            return audioSource.GetCanceler();
         }
 
         public CancellationTokenSource Play3D(AudioResource resource, Vector2 position, out Action<Vector2> updatePosition) {
@@ -30,25 +30,13 @@ namespace Core.Audio {
             audioSource.spatialBlend = 1;
             audioSource.Play();
             
-            CancellationTokenSource canceler = GetCanceler(audioSource);
+            CancellationTokenSource canceler = audioSource.GetCanceler();
             CancellationToken token = canceler.Token;
             updatePosition = newPos => {
                 if (token.IsCancellationRequested) return;
                 audioSource.transform.position = newPos;
             };
             return canceler;
-        }
-
-        private static CancellationTokenSource GetCanceler(AudioSource audioSource) {
-            CancellationTokenSource canceler = new();
-            DisposeHandler(canceler).Forget();
-            return canceler;
-
-            async UniTaskVoid DisposeHandler(CancellationTokenSource cancellation) {
-                bool canceled = await UniTask.WaitUntil(() => !audioSource.isPlaying, cancellationToken: cancellation.Token).SuppressCancellationThrow();
-                if (canceled && audioSource.isPlaying) audioSource.Stop();
-                cancellation.Cancel();
-            }
         }
 
         private AudioSource Get() {

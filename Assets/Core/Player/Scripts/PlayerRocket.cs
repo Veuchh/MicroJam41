@@ -42,8 +42,16 @@ namespace Core.Player {
         private Vector2 currentRocketLauncherDirection;
         private Sequence recoilSequence;
 
-        private void Start()
-        {
+        private void OnEnable() {
+            RocketRefillCollectible.OnAmmoCollected -= OnCollectiblePicked;
+            RocketRefillCollectible.OnAmmoCollected += OnCollectiblePicked;
+        }
+
+        private void OnDisable() {
+            RocketRefillCollectible.OnAmmoCollected -= OnCollectiblePicked;
+        }
+
+        private void Start() {
             RefillRockets();
         }
 
@@ -71,9 +79,10 @@ namespace Core.Player {
             _rocketVisuals.SetAmmoCount(currentRocketAmount);
             GameCanvas.Instance?.UpdateRocketsUI(currentRocketAmount);
         }
-
-        public void AddRockets(int rocketsToAdd)
-        {
+        
+        private void OnCollectiblePicked(Vector2 position, int ammoCount) => AddRockets(ammoCount);
+        
+        public void AddRockets(int rocketsToAdd) {
             currentRocketAmount = Mathf.Min(currentRocketAmount + rocketsToAdd, maxRocketAmount);
             _rocketVisuals.SetAmmoCount(currentRocketAmount);
             GameCanvas.Instance?.UpdateRocketsUI(currentRocketAmount);

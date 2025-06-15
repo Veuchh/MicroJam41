@@ -18,10 +18,8 @@ namespace Core.Level {
         
         [SerializeField, Tag] private string _playerTag;
         [SerializeField] private float _cooldownDuration = 2f;
-
         [SerializeField] private Animator _animator;
 
-        private float _cooldownEnd;
         private bool _isVisible = true;
         private bool _isCollected;
 
