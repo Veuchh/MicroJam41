@@ -23,6 +23,9 @@ namespace Core.Audio {
         
         [SerializeField] private AudioPool _ammoReloadSource;
         [SerializeField] private AudioResource _ammoReload;
+        
+        [SerializeField] private AudioPool _playerImpactSource;
+        [SerializeField] private AudioResource _playerImpact;
 
         [Header("Collectibles")]
         [SerializeField] private AudioPool _breadcrumbCollectSource;
@@ -111,6 +114,14 @@ namespace Core.Audio {
             );
             _playerEventBindings.Add(rocketReloaded.Subscribe(_ => {
                 _ammoReloadSource.Play2D(_ammoReload);
+            }));
+
+            IObservable<(Vector2,Vector2)> impactDetected = Observable.FromEvent<(Vector2,Vector2)>(
+                handler => ImpactDetection.OnImpactDetected += handler,
+                handler => ImpactDetection.OnImpactDetected -= handler
+            );
+            _playerEventBindings.Add(impactDetected.Subscribe(_ => {
+                _playerImpactSource.Play2D(_playerImpact);
             }));
         }
 

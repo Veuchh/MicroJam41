@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 
 public class ImpactDetection : MonoBehaviour
 {
     const string PLATFORM_TAG = "Platform";
+
+    public static event Action<(Vector2 pos, Vector2 normal)> OnImpactDetected;
 
     [SerializeField]
     float minVelocityThresholdToTrigger = 20;
@@ -19,6 +22,8 @@ public class ImpactDetection : MonoBehaviour
                     0,
                     0,
                     Vector2.SignedAngle(Vector2.up, collision.contacts[0].normal)));
+            
+            OnImpactDetected?.Invoke((collision.contacts[0].point, collision.contacts[0].normal));
         }
     }
 }
