@@ -1,12 +1,13 @@
 using Core.Player;
+using Core.Player.Data;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class InputHandler : MonoBehaviour
 {
-    [SerializeField] 
-    PlayerRocket playerRocket;
-
+    [SerializeField] private PlayerRocket playerRocket;
+    [SerializeField] private PlayerData _playerData;
+    
     [SerializeField] 
     AnchorPointHandler anchorPointHandler;
 
@@ -20,8 +21,7 @@ public class InputHandler : MonoBehaviour
         Vector3 frogScreenPos = MainCamera.WorldToScreenPoint(transform.position);
 
         Vector2 direction = mouseScreenPos - new Vector2(frogScreenPos.x, frogScreenPos.y);
-
-        playerRocket.UpdateRocketLauncherDirection(direction);
+        _playerData.currentAimDirection.Value = direction.normalized;
     }
 
 
@@ -37,6 +37,6 @@ public class InputHandler : MonoBehaviour
 
     public void OnUpdateJoystickDirection(InputValue value)
     {
-        playerRocket.UpdateRocketLauncherDirection(value.Get<Vector2>().normalized);
+        _playerData.currentAimDirection.Value = value.Get<Vector2>().normalized;
     }
 }

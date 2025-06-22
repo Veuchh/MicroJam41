@@ -1059,6 +1059,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6f558b245e36b445919156b6d6fe8b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerData: {fileID: 11400000, guid: d077510bf1b7e9944a61ca930c5e081b, type: 2}
   aimPerlinSpeed: 3
   minMaxSleepTime: {x: 0.1, y: 0.6}
 --- !u!1001 &1879269441
@@ -1125,6 +1126,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 1.2124354
       objectReference: {fileID: 0}
+    - target: {fileID: 3546333416911681364, guid: 522c4e082a166204cb65df0a27f21da7, type: 3}
+      propertyPath: _playerSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: 0f80022ffceaed74aa8a1570a0bbf272, type: 2}
+    - target: {fileID: 4292792043708119693, guid: 522c4e082a166204cb65df0a27f21da7, type: 3}
+      propertyPath: _playerSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: 0f80022ffceaed74aa8a1570a0bbf272, type: 2}
     - target: {fileID: 4292792043708119693, guid: 522c4e082a166204cb65df0a27f21da7, type: 3}
       propertyPath: maxRocketAmount
       value: 50
@@ -5008,7 +5017,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 2350522505871806030, guid: 4b52f950ca6690b4f843f9222ec2ee79, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 21d96e34a48d231438d84a19d0104198, type: 3}
+  m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 21d96e34a48d231438d84a19d0104198, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.2

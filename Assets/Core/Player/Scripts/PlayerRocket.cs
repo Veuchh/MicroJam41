@@ -1,53 +1,43 @@
-using DG.Tweening;
+using Core.Player.Data;
+using Core.Player.Events;
 using NaughtyAttributes;
-using System;
+using UniRx;
 using UnityEngine;
 
 namespace Core.Player {
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(AnchorPointHandler))]
     public class PlayerRocket : MonoBehaviour {
-        public delegate void RocketFireEvent(Vector2 pos, Vector2 dir);
-        public static event RocketFireEvent OnRocketFired;
-    
         private Rigidbody2D Rigidbody => _rigidbody ??= GetComponent<Rigidbody2D>();
         private Rigidbody2D _rigidbody;
         private AnchorPointHandler AnchorPointHandler => _anchorPointHandler ??= GetComponent<AnchorPointHandler>();
         private AnchorPointHandler _anchorPointHandler;
         
-        [Foldout("Rocket Refill")] [SerializeField] LayerMask platformLayerMask;
-        [Foldout("Rocket Refill")] [SerializeField] float sideRaycastDistance = .35f;
-        [Foldout("Rocket Refill")] [SerializeField] float rocketRefillRaycastDist;
-        [Foldout("Rocket Refill")] [SerializeField] int maxRocketAmount;
-        [Foldout("Rocket Refill")] [SerializeField] int MinRocketAmountOnGrabAnchorPoint = 1;
-        [Foldout("Rocket Refill")] [SerializeField] float rocketCooldown = .1f;
-        [Space]
-        [Foldout("Rocket Inertia")] [SerializeField] float slingshotStrengthMultiplier = 1;
-        [Foldout("Rocket Inertia")] [SerializeField] float rocketStrength;
-        [Foldout("Rocket Inertia")] [SerializeField] float baseMomentumMultiplierOnFireIfSameDir = .5f;
-        [Foldout("Rocket Inertia")] [SerializeField] float momentumMultiplierOnFireSameDirection = .25f;
-        [Foldout("Rocket Inertia")] [SerializeField] float momentumMultiplierOnFireOppositeDirection = .1f;
+        [SerializeField] private PlayerEvents _playerEvents;
+        [SerializeField] private PlayerData _playerData;
+        [SerializeField] private PlayerSettings _playerSettings;
 
-        [Space] [Foldout("GFX")] [SerializeField] private RocketLauncherVisualHandler _rocketVisuals;
+        [Foldout("GFX")] [SerializeField] private RocketLauncherVisualHandler _rocketVisuals;
         [Foldout("GFX")] [SerializeField] Transform eyeLeft;
         [Foldout("GFX")] [SerializeField] Transform eyeRight;
-        [Foldout("GFX")][SerializeField] Transform recoilTransform;
-        [Foldout("GFX")][SerializeField] float recoilStrength = .1f;
-        [Foldout("GFX")][SerializeField] float recoilDuration = .1f;
-        [Foldout("GFX")][SerializeField] float recoilRecoverDuration = .1f;
-        [Foldout("GFX")][SerializeField] float recoilMaxDistance = .2f;
 
         private int currentRocketAmount;
         private float nextAllowedRocketShot;
-        private Vector2 currentRocketLauncherDirection;
-        private Sequence recoilSequence;
+        private readonly CompositeDisposable _bindings = new();
+
+
+        private void OnDestroy() {
+            _bindings.Dispose();
+        }
 
         private void OnEnable() {
             RocketRefillCollectible.OnAmmoCollected -= OnCollectiblePicked;
             RocketRefillCollectible.OnAmmoCollected += OnCollectiblePicked;
+            _bindings.Add(_playerData.currentAimDirection.Subscribe(OnAimDirectionChanged));
         }
 
         private void OnDisable() {
+            _bindings.Clear();
             RocketRefillCollectible.OnAmmoCollected -= OnCollectiblePicked;
         }
 
@@ -56,41 +46,39 @@ namespace Core.Player {
         }
 
         private void Update() {
-            eyeLeft.rotation = Quaternion.Euler(0, 0, Vector2.SignedAngle(Vector2.up, currentRocketLauncherDirection));
-            eyeRight.rotation = Quaternion.Euler(0, 0, Vector2.SignedAngle(Vector2.up, currentRocketLauncherDirection));
+            eyeLeft.rotation = Quaternion.Euler(0, 0, Vector2.SignedAngle(Vector2.up, _playerData.currentAimDirection.Value));
+            eyeRight.rotation = Quaternion.Euler(0, 0, Vector2.SignedAngle(Vector2.up, _playerData.currentAimDirection.Value));
 
-            if (Rigidbody.linearVelocityY <= 0 && IsGrounded())
-            {
+            if (Rigidbody.linearVelocityY <= 0 && IsGrounded()) {
                 RefillRockets();
             }
         }
 
-        bool IsGrounded()
-        {
-            return 
-                Physics2D.Raycast(transform.position, Vector2.down, rocketRefillRaycastDist, platformLayerMask)
-                ||Physics2D.Raycast(transform.position + Vector3.left * sideRaycastDistance, Vector2.down, rocketRefillRaycastDist, platformLayerMask)
-                ||Physics2D.Raycast(transform.position + Vector3.right * sideRaycastDistance, Vector2.down, rocketRefillRaycastDist, platformLayerMask);
-        }
+        private bool IsGrounded() => _rigidbody.IsTouching(_playerSettings.GroundCheckContactFilter);
+        // {
+        //     return 
+        //         Physics2D.Raycast(transform.position, Vector2.down, _playerStats.GroundCheckDistance, _playerStats.PlatformLayerMask)
+        //         ||Physics2D.Raycast(transform.position + Vector3.left * _playerStats.SideRaycastDistance, Vector2.down, _playerStats.GroundCheckDistance, _playerStats.PlatformLayerMask)
+        //         ||Physics2D.Raycast(transform.position + Vector3.right * _playerStats.SideRaycastDistance, Vector2.down, _playerStats.GroundCheckDistance, _playerStats.PlatformLayerMask);
+        // }
 
         public void RefillRockets()
         {
-            currentRocketAmount = maxRocketAmount;
+            currentRocketAmount = _playerSettings.MaxRocketAmount;
             _rocketVisuals.SetAmmoCount(currentRocketAmount);
-            GameCanvas.Instance?.UpdateRocketsUI(currentRocketAmount);
+            if (GameCanvas.Instance) GameCanvas.Instance.UpdateRocketsUI(currentRocketAmount);
         }
         
         private void OnCollectiblePicked(Vector2 position, int ammoCount) => AddRockets(ammoCount);
         
         public void AddRockets(int rocketsToAdd) {
-            currentRocketAmount = Mathf.Min(currentRocketAmount + rocketsToAdd, maxRocketAmount);
+            currentRocketAmount = Mathf.Min(currentRocketAmount + rocketsToAdd, _playerSettings.MaxRocketAmount);
             _rocketVisuals.SetAmmoCount(currentRocketAmount);
-            GameCanvas.Instance?.UpdateRocketsUI(currentRocketAmount);
+            if(GameCanvas.Instance) GameCanvas.Instance.UpdateRocketsUI(currentRocketAmount);
         }
 
-        public void UpdateRocketLauncherDirection(Vector2 newDirection) {
-            _rocketVisuals.SetDirection(newDirection.normalized);
-            currentRocketLauncherDirection = newDirection.normalized;
+        private void OnAimDirectionChanged(Vector2 direction) {
+            _rocketVisuals.SetDirection(direction);
         }
 
         public void OnFireClicked()
@@ -102,52 +90,44 @@ namespace Core.Player {
 
         private void FireRocket()
         {
-            nextAllowedRocketShot = Time.time + rocketCooldown;
+            nextAllowedRocketShot = Time.time + _playerSettings.RocketCooldown;
             currentRocketAmount--;
             _rocketVisuals.Fire(currentRocketAmount);
 
             GameCanvas.Instance?.UpdateRocketsUI(currentRocketAmount);
 
-            float dotProduct = Vector2.Dot(Rigidbody.linearVelocity, -currentRocketLauncherDirection);
+            Vector2 aimDirection = _playerData.currentAimDirection.Value;
+            float dotProduct = Vector2.Dot(Rigidbody.linearVelocity, -aimDirection);
 
             if (dotProduct > 0)
-                Rigidbody.linearVelocity *= (1 / dotProduct) * momentumMultiplierOnFireSameDirection + baseMomentumMultiplierOnFireIfSameDir;
+                Rigidbody.linearVelocity *= (1 / dotProduct) * _playerSettings.MomentumMultiplierOnFireSameDirection + _playerSettings.BaseMomentumMultiplierOnFireIfSameDir;
             else
-                Rigidbody.linearVelocity *= momentumMultiplierOnFireOppositeDirection;
+                Rigidbody.linearVelocity *= _playerSettings.MomentumMultiplierOnFireOppositeDirection;
 
             //Slingshotting when shooting perpendicularly to held anchor
             float slingShotMultiplier = 1;
             if (AnchorPointHandler.IsHoldingAnchorPoint)
             {
-                Vector2 transformPositionVector2 = new Vector2(transform.position.x, transform.position.y);
-                Vector2 anchorPositionVector2 = new Vector2(AnchorPointHandler.HeldAnchorPoint.transform.position.x, AnchorPointHandler.HeldAnchorPoint.transform.position.y);
+                Vector2 transformPositionVector2 = new (transform.position.x, transform.position.y);
+                Vector2 anchorPositionVector2 = new (AnchorPointHandler.HeldAnchorPoint.transform.position.x, AnchorPointHandler.HeldAnchorPoint.transform.position.y);
                 Vector2 direction = transformPositionVector2 - anchorPositionVector2;
-                float anchorToAimDotProduct = Vector2.Dot(-currentRocketLauncherDirection.normalized, direction.normalized);
+                float anchorToAimDotProduct = Vector2.Dot(-aimDirection, direction.normalized);
 
-                slingShotMultiplier += (- (Mathf.Abs(anchorToAimDotProduct) - 1)) * slingshotStrengthMultiplier;
+                slingShotMultiplier += (- (Mathf.Abs(anchorToAimDotProduct) - 1)) * _playerSettings.SlingshotStrengthMultiplier;
             }
 
-            Rigidbody.AddForce(-currentRocketLauncherDirection * rocketStrength * slingShotMultiplier, ForceMode2D.Impulse);
-            OnRocketFired?.Invoke(transform.position, currentRocketLauncherDirection);
-
-            RecoilRocketLauncher();
-        }
-
-        private void RecoilRocketLauncher()
-        {
-            if (recoilSequence != null)
-                recoilSequence.Kill();
-
-            recoilSequence = DOTween.Sequence();
-
-            float targetRecoil = Mathf.Min(recoilTransform.localPosition.z + recoilStrength, recoilMaxDistance);
-
-            recoilSequence.Join(recoilTransform.DOLocalMoveX(targetRecoil, recoilDuration).SetEase(Ease.OutCirc));
-            recoilSequence.Append(recoilTransform.DOLocalMoveX(0, recoilRecoverDuration).SetEase(Ease.InOutSine));
+            Rigidbody.AddForce(-aimDirection * _playerSettings.RocketStrength * slingShotMultiplier, ForceMode2D.Impulse);
+            
+            if (_playerEvents) {
+                _playerEvents.onRocketFireRequested.Invoke(new PlayerEvents.RocketFiredData {
+                    position = transform.position, 
+                    direction = aimDirection
+                });
+            }
         }
 
         public void OnAnchorPointGrabbed() {
-            currentRocketAmount = Mathf.Max(currentRocketAmount, MinRocketAmountOnGrabAnchorPoint);
+            currentRocketAmount = Mathf.Max(currentRocketAmount, _playerSettings.MinRocketAmountOnGrabAnchorPoint);
             GameCanvas.Instance?.UpdateRocketsUI(currentRocketAmount);
             _rocketVisuals.SetAmmoCount(currentRocketAmount);
         }

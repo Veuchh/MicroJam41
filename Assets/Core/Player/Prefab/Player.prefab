@@ -243,7 +243,7 @@ Transform:
   m_GameObject: {fileID: 1396407320595610951}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.6000006, y: 1.8199998, z: -15}
+  m_LocalPosition: {x: -1.7320511, y: 1.2124354, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1181,6 +1181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6619e784934a2de469da68f6d66d79ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerEvents: {fileID: 11400000, guid: 31539200705ec794ba5a3718168a96f8, type: 2}
   _rocketPrefab: {fileID: -2817147187230557596, guid: 348224d0e5ef8754bb0469a9ac1fdc19, type: 3}
 --- !u!1 &7053318522045165985
 GameObject:
@@ -1473,6 +1474,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1592519241934222486}
+  - component: {fileID: 3546333416911681364}
   m_Layer: 7
   m_Name: Recoil
   m_TagString: Untagged
@@ -1497,6 +1499,21 @@ Transform:
   - {fileID: 1360188526327499868}
   m_Father: {fileID: 7942051326870572214}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3546333416911681364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7599196678348581834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1156fbf653864aacb941d3691b3230a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerSettings: {fileID: 11400000, guid: 7accbcb0aae70d44f8680394df5e6e61, type: 2}
+  _playerEvents: {fileID: 11400000, guid: 31539200705ec794ba5a3718168a96f8, type: 2}
+  _recoilTransform: {fileID: 1592519241934222486}
 --- !u!1 &9185367874890652152
 GameObject:
   m_ObjectHideFlags: 0
@@ -1513,6 +1530,7 @@ GameObject:
   - component: {fileID: 3700210467265943830}
   - component: {fileID: 4823188532003044778}
   - component: {fileID: 113622361878350197}
+  - component: {fileID: 3443857461832833365}
   - component: {fileID: 2258917976702340482}
   - component: {fileID: 1909304572520325422}
   - component: {fileID: -3173913931628282514}
@@ -1557,27 +1575,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9509c3866ec70ce4a98fc2245c912f84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  platformLayerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  sideRaycastDistance: 0.05
-  rocketRefillRaycastDist: 0.7
-  maxRocketAmount: 3
-  MinRocketAmountOnGrabAnchorPoint: 1
-  rocketCooldown: 0.1
-  slingshotStrengthMultiplier: 1
-  rocketStrength: 15
-  baseMomentumMultiplierOnFireIfSameDir: 0.5
-  momentumMultiplierOnFireSameDirection: 0.25
-  momentumMultiplierOnFireOppositeDirection: 0.1
+  _playerEvents: {fileID: 11400000, guid: 31539200705ec794ba5a3718168a96f8, type: 2}
+  _playerData: {fileID: 11400000, guid: d077510bf1b7e9944a61ca930c5e081b, type: 2}
+  _playerSettings: {fileID: 11400000, guid: 7accbcb0aae70d44f8680394df5e6e61, type: 2}
   _rocketVisuals: {fileID: 6660558666827622129}
   eyeLeft: {fileID: 4172798890175324615}
   eyeRight: {fileID: 2101027094426646595}
-  recoilTransform: {fileID: 1592519241934222486}
-  recoilStrength: 0.1
-  recoilDuration: 0.1
-  recoilRecoverDuration: 0.1
-  recoilMaxDistance: 0.2
 --- !u!114 &1439403255031621134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1611,6 +1614,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerRocket: {fileID: 4292792043708119693}
+  _playerData: {fileID: 11400000, guid: d077510bf1b7e9944a61ca930c5e081b, type: 2}
   anchorPointHandler: {fileID: 1439403255031621134}
 --- !u!114 &5994721333242856371
 MonoBehaviour:
@@ -1721,6 +1725,20 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!114 &3443857461832833365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9185367874890652152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b9468b35c6146e0947f0ede61429b1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerEvents: {fileID: 11400000, guid: 31539200705ec794ba5a3718168a96f8, type: 2}
+  _rocketFiredScreenShakeDuration: 0.1
 --- !u!114 &2258917976702340482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1734,7 +1752,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cinemachineCamera: {fileID: 981405578737193693}
-  rocketScreenShakeDuration: 0.1
   screenShakeAmplitude: 2.5
   screenShakeFrequency: 10
 --- !u!232 &1909304572520325422

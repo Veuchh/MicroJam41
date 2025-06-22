@@ -14,22 +14,18 @@ public class RocketUI : MonoBehaviour {
 
     CanvasGroup canvasGroup;
     Sequence currentSequence;
-    bool isShown = false;
 
-    CanvasGroup CanvasGroup => canvasGroup ??= GetComponent<CanvasGroup>(); 
-
-    public bool IsShown => isShown;
+    private CanvasGroup CanvasGroup => canvasGroup ??= GetComponent<CanvasGroup>(); 
+    public bool IsShown { get; private set; } = false;
 
     private void Start()
     {
         startPosition = transform.localPosition;
     }
 
-    void KillTween()
+    private void KillTween()
     {
-        if (currentSequence != null)
-            currentSequence.Kill();
-
+        currentSequence?.Kill();
         currentSequence = null;
     }
 
@@ -38,7 +34,7 @@ public class RocketUI : MonoBehaviour {
     {
         KillTween();
 
-        isShown = false;
+        IsShown = false;
         
         transform.rotation = Quaternion.identity;
         CanvasGroup.alpha = 1;
@@ -51,14 +47,16 @@ public class RocketUI : MonoBehaviour {
 
     [Button]
     public void OnRocketRecovered(float durationDelay = 0) {
-        isShown = true;
+        IsShown = true;
         KillTween();
         currentSequence = DOTween.Sequence();
         currentSequence.AppendInterval(durationDelay);
         currentSequence.AppendCallback(() => {
-            transform.localPosition = startPosition;
-            transform.rotation = Quaternion.Euler(0,0,rotationStrength);
-            CanvasGroup.alpha = 0;
+            if (transform) {
+                transform.localPosition = startPosition;
+                transform.rotation = Quaternion.Euler(0,0,rotationStrength);
+            }
+            if (CanvasGroup) CanvasGroup.alpha = 0;
             OnRocketReloaded?.Invoke();
         });
         currentSequence.Join(transform.DORotate(Vector3.zero, fadeInTweenDuration).SetEase(Ease.OutQuad));
